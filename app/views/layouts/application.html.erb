@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Quiz2</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= javascript_pack_tag 'application' %>
+  </head>
+
+  <body>
+    <nav>
+      <% if user_signed_in? %>
+        Hello <%= link_to "#{current_user.full_name}", edit_user_path(current_user)%>
+        <%= link_to "Sign out", session_path, method: :delete ,
+        data: {comfirm: "Are you sure you want to logout?"} %> |
+      <% else %>
+        <%= link_to "Sign In", new_session_path %> |
+        <%= link_to "Sign up", new_user_path %>
+      <% end %><hr>
+      <%= link_to 'Home', ideas_path %>
+      <%= link_to 'New Idea', new_idea_path %>
+    </nav>
+    <p>
+    <% flash.each do |type, message| %>
+      <div class="flash flash-<%= type %>">
+        <%= message %>
+      </div>
+    <% end %>
+    </p>
+  <%= yield %>
+  </body>
+</html>

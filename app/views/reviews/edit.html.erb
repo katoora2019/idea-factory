@@ -1,0 +1,11 @@
+<h1>EDIT REVIEW</h1>
+<%= form_with(model: [@idea, @review], local: true) do |f| %>
+   <% if @review.errors.present? %>
+            <%= @review.errors.full_messages.join(", ") %>
+    <% end %>
+
+   <%= f.label :body %>
+   <%= f.text_area :body %>
+
+   <%= f.submit %>
+<% end %>

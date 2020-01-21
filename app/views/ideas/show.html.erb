@@ -1,0 +1,64 @@
+<h1> <%= @idea.title %> </h1>
+
+<p> <%= @idea.description %> </p>
+
+<small>
+   Posted <%= time_ago_in_words(@idea.created_at) %>
+</small>
+
+<%= link_to 'Edit', edit_idea_path(@idea) %>
+<%= link_to 'destroy', 
+    idea_path(@idea), 
+    method: :delete,
+    data: {
+      confirm: "Are you sure?"
+   } 
+%><br>
+   <%= pluralize(@idea.likes.count, "like") %>
+   <% if user_signed_in? && can?(:like, @idea) %>
+      <% like = current_user.likes.find_by_idea_id(@idea) %>    
+         <% if like  %>
+            <small>
+               <%= link_to 'Unlike', like_path(like), method: :delete %>
+            </small>
+         <% else %>
+            <small>
+               <%= link_to 'Like', idea_likes_path(@idea), method: :post %>
+            </small>
+         <% end %>
+   <% end %>
+
+<%= form_with(model: [@idea, @review], local: true) do |f| %>
+   <% if @review.errors.present? %>
+            <%= @review.errors.full_messages.join(", ") %>
+    <% end %>
+
+   <%= f.label :body %><br>
+   <%= f.text_area :body %><br>
+
+   <%= f.submit %>
+<% end %><hr>
+<h2>Comments</h2>
+<% @reviews.each do |review| %>
+   
+   <p><%= review.body %></p>
+   
+   <small>
+      Posted <%= time_ago_in_words(review.created_at) %>
+   </small>
+
+   <% if can? :crud, review %>
+      <small>
+         <%= link_to(
+            "Delete",
+            idea_review_path(@idea, review),
+            method: :delete,
+            data: {
+               confirm: "Are you sure?"
+            }
+         ) %>
+         <%= link_to 'Edit', edit_idea_review_path(@idea, review)%>
+      </small><br>
+   <% end %>
+   <hr>
+<% end %>
