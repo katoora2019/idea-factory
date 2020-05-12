@@ -4,31 +4,37 @@
     <title>Quiz2</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" />
 
     <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= javascript_pack_tag 'application' %>
   </head>
-
   <body>
-    <nav>
+     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <% if user_signed_in? %>
-        Hello <%= link_to "#{current_user.full_name}", edit_user_path(current_user)%>
-        <%= link_to "Sign out", session_path, method: :delete ,
-        data: {comfirm: "Are you sure you want to logout?"} %> |
+        <%= link_to "Sign out", session_path, method: :delete ,class: 'btn btn-danger'%>
+  
       <% else %>
-        <%= link_to "Sign In", new_session_path %> |
-        <%= link_to "Sign up", new_user_path %>
+        <%= link_to "Sign In", new_session_path, class: 'btn btn-outline-success my-2 my-sm-0' %> 
+        <%= link_to "Sign up", new_user_path, class: 'btn btn-outline-success my-2 my-sm-0' %>
       <% end %><hr>
-      <%= link_to 'Home', ideas_path %>
+
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <span class='text-muted mr-2'>Hello Mr. Idea <%= link_to "#{current_user.full_name}", edit_user_path(current_user)%></span>
+      <%= link_to 'Home', ideas_path  %>
       <%= link_to 'New Idea', new_idea_path %>
+      
+      </ul>
+      
     </nav>
-    <p>
+    <div class="container-fluid">
     <% flash.each do |type, message| %>
       <div class="flash flash-<%= type %>">
         <%= message %>
       </div>
     <% end %>
-    </p>
+    </div>
   <%= yield %>
   </body>
 </html>

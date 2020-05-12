@@ -1,32 +1,36 @@
 <h1>Sign Up</h1>
+<div class='shadow-sm p-3 mb-5 bg-white rounded'>
 <%= form_with(model: @user, local: true) do |f| %>
     <% if @user.errors.any? %>
+    <p>
         <%= @user.errors.full_messages.join(', ') %>
+        </p>
     <%end%>
-    <div>
+    <div class="form-group">
     <%= f.label :first_name %>
-    <%= f.text_field :first_name %>
+    <%= f.text_field :first_name, class: 'form-control' %>
     </div>
 
-    <div>
+    <div  class="form-group">
     <%= f.label :last_name %>
-    <%= f.text_field :last_name %>
+    <%= f.text_field :last_name, class: 'form-control' %>
     </div>
 
-    <div>
+    <div class="form-group">
     <%= f.label :email %>
-    <%= f.text_field :email %>
+    <%= f.text_field :email, class: 'form-control' %>
     </div>
 
-    <div>
+    <div class="form-group">
     <%= f.label :password %>
-    <%= f.password_field :password %>
+    <%= f.password_field :password, class: 'form-control' %>
     </div>
 
-    <div>
+    <div class="form-group">
     <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation %>
+    <%= f.password_field :password_confirmation, class: 'form-control' %>
     </div>
 
-    <%= f.submit "Sign Up" %>
+    <%= f.submit "Sign Up", class: 'btn btn-primary' %>
 <%end%>
+</div>

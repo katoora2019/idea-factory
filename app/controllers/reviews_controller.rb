@@ -46,7 +46,12 @@ class ReviewsController < ApplicationController
     end
 
     def find_review
-        @review = Review.find params[:id]
+        # @review = Review.find params[:id]
+        if params[:id].present?
+            @review = Review.find params[:id]
+        else
+            @review=Review.new
+        end
     end
 
     def authenticated!
